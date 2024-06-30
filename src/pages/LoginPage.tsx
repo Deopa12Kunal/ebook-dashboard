@@ -3,6 +3,10 @@ import { Card ,CardContent, CardDescription,CardFooter,CardHeader,CardTitle} fro
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+
+
+
 // import { Section } from "lucide-react";
 
 const LoginPage = () => {
@@ -28,6 +32,12 @@ const LoginPage = () => {
       </CardContent>
       <CardFooter>
         <Button className="w-full">Sign in</Button>
+         <div className="mt-4 text-center text-sm">
+          Don't have an account?{" "}
+          <Link to={'/login'} className="underline">
+            Sign in
+          </Link>
+        </div>
       </CardFooter>
   </Card>
    </section>
