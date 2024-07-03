@@ -7,6 +7,8 @@ import { Link ,useNavigate} from "react-router-dom";
 import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/http/api";
+import {  LoaderCircle } from "lucide-react";
+// import { cn } from "@/lib/utils";
 
 
 // import { Section } from "lucide-react";
@@ -43,6 +45,7 @@ if(!email || !password){
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
+          {mutation.isPending && <div>Loading...</div>}
           Enter your email below to login to your account.
         </CardDescription>
       </CardHeader>
@@ -58,11 +61,16 @@ if(!email || !password){
       </CardContent>
       <CardFooter>
         <div className="w-full">
-         
-         
-<Button onClick={handleLoginSubmit} className="w-full">
-  Sign in
+             
+<Button onClick={handleLoginSubmit} className="w-full " disabled={mutation.isPending}>
+  {
+  mutation.isPending && <LoaderCircle className="animate-spin"/>
+  }
+  
+  <span className="ml-2">Sign in
+  </span>
   </Button>
+
          <div className="mt-4 text-center text-sm">
           Don't have an account?{" "}
           <Link to={'/auth/register'} className="underline">
