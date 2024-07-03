@@ -45,8 +45,16 @@ if(!email || !password){
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
-          {mutation.isPending && <div>Loading...</div>}
-          Enter your email below to login to your account.
+        
+          Enter your email below to login to your account.<br/>
+            {/* this is loading state */}
+          {/* {mutation.isPending && <div>Loading...</div>} */}
+     {/* we can also add error is occured */}
+     {mutation.isError && (
+      <span className="text-red-600 text-sm">
+        {"Something went wrong"}
+      </span>
+     )}
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
