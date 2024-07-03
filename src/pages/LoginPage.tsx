@@ -3,22 +3,37 @@ import { Card ,CardContent, CardDescription,CardFooter,CardHeader,CardTitle} fro
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { useRef } from "react";
-
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/http/api";
 
 
 // import { Section } from "lucide-react";
 
 const LoginPage = () => {
+   const navigate = useNavigate();
    const emailRef = useRef<HTMLInputElement>(null);
    const passwordRef = useRef<HTMLInputElement>(null);
+   // mutationFn will call react quesry
+      const  mutation  = useMutation({
+        mutationFn: login,
+        onSuccess:()=>{
+          console.log("loggin successful");
+          //redirect to dasboard
+          navigate('/dashboard/home');
+        },
+      });
     const handleLoginSubmit=()=>{
        const email = emailRef.current?.value;
        const password = passwordRef.current?.value;
            console.log('data', {email, password});
-
-       // make server call
+if(!email || !password){
+  return alert("Please enter your email and password");
+}
+       // make server call we will use mutation
+       mutation.mutate({email, password});
+    
     }
   
   return (
