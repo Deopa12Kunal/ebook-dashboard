@@ -36,7 +36,7 @@ if(!email || !password){
        // make server call we will use mutation
        mutation.mutate({email, password});
     
-    }
+    };
   
   return (
 

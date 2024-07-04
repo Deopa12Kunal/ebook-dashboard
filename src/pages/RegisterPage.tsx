@@ -3,10 +3,45 @@ import { Card ,CardContent, CardDescription,CardHeader,CardTitle} from "@/compon
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { register } from "@/http/api";
+import { useMutation } from "@tanstack/react-query";
+import {  LoaderCircle } from "lucide-react";
+
+// import { login } from "@/http/api";
+
+
 
 const RegisterPage = () => {
-  return (
+  
+      const navigate = useNavigate();
+       const nameRef = useRef<HTMLInputElement>(null);
+   const emailRef = useRef<HTMLInputElement>(null);
+   const passwordRef = useRef<HTMLInputElement>(null);
+   // mutationFn will call react quesry
+      const  mutation  = useMutation({
+        mutationFn: register,
+        onSuccess:()=>{
+          console.log("loggin successful");
+          //redirect to dasboard
+          navigate('/dashboard/home');
+        },
+      });  
+    const handleRegisterSubmit=()=>{
+             const name = nameRef.current?.value;
+
+       const email = emailRef.current?.value;
+       const password = passwordRef.current?.value;
+           console.log('data', {email, password});
+if(!name || !email || !password){
+  return alert("Please enter your email and password");
+}
+       // make server call we will use mutation
+       mutation.mutate({name,email, password});
+    
+    };
+     return (
     <section className="flex justify-center items-center h-screen">
         <Card   className="w-full max-w-sm">
       <CardHeader>
@@ -14,17 +49,23 @@ const RegisterPage = () => {
         <CardDescription>
           Enter your information to create an account
         </CardDescription>
+         {mutation.isError && (
+      <span className="text-red-600 text-sm">
+        {"Something went wrong"}
+      </span>
+     )}
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
           <div className="grid  gap-4">
            <Label htmlFor="first-name">Name</Label>
-              <Input id="first-name" placeholder="Max" required />
+              <Input ref ={nameRef} id="first-name" placeholder="Max" required />
            
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
+            ref={emailRef}
               id="email"
               type="email"
               placeholder="m@example.com"
@@ -33,11 +74,19 @@ const RegisterPage = () => {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" />
+            <Input  ref={passwordRef} id="password" type="password" />
           </div>
-          <Button type="submit" className="w-full">
+          <Button onClick={handleRegisterSubmit} className="w-full " disabled={mutation.isPending}>
+  {
+  mutation.isPending && <LoaderCircle className="animate-spin"/>
+  }
+  
+  <span className="ml-2">Create an account
+  </span>
+  </Button>
+          {/* <Button onClick={handleRegisterSubmit} type="submit" className="w-full">
             Create an account
-          </Button>
+          </Button> */}
           {/* <Button variant="outline" className="w-full">
             Sign up with GitHub
           </Button> */}
@@ -51,7 +100,7 @@ const RegisterPage = () => {
       </CardContent>
     </Card>
     </section>
-  )
+  );
 }
 
 export default RegisterPage
