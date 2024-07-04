@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/http/api";
 import {  LoaderCircle } from "lucide-react";
+import useTokenStore from "@/store";
 // import { cn } from "@/lib/utils";
 
 
@@ -15,13 +16,15 @@ import {  LoaderCircle } from "lucide-react";
 
 const LoginPage = () => {
    const navigate = useNavigate();
+    const setToken = useTokenStore((state)=> state.setToken);
    const emailRef = useRef<HTMLInputElement>(null);
    const passwordRef = useRef<HTMLInputElement>(null);
    // mutationFn will call react quesry
       const  mutation  = useMutation({
         mutationFn: login,
-        onSuccess:()=>{
-          console.log("loggin successful");
+        onSuccess:(response)=>{
+          // console.log("loggin successful",data);
+          setToken(response.data.accessToken);
           //redirect to dasboard
           navigate('/dashboard/home');
         },
