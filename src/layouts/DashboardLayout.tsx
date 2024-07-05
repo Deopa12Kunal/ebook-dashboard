@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet,Navigate } from "react-router-dom";
 
 import {
   Bell,
@@ -32,10 +32,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import useTokenStore from '@/store';
 
 
 const DashboardLayout = () => {
+   const token = useTokenStore(state=>state.token);
+   if(token==="")
+    {
+return<Navigate to ={'/auth/login'} replace></Navigate>
+   }
   return (
+
     <div>
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
