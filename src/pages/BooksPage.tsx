@@ -7,9 +7,12 @@
  import {
 
   MoreHorizontal,
+  
  
-} from "lucide-react"
-import{author, Book} from'@/types';
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { CirclePlus } from 'lucide-react';
+import{ Book} from'@/types';
  import {
   Breadcrumb,
   BreadcrumbItem,
@@ -56,7 +59,9 @@ import {
   console.log(data);
     
   return (
-    <div><Breadcrumb>
+    <div >
+      <div className="flex items-center justify-between">
+        <Breadcrumb>
   <BreadcrumbList>
     <BreadcrumbItem>
       <BreadcrumbLink href="/dashboard/home">Home</BreadcrumbLink>
@@ -67,6 +72,14 @@ import {
     </BreadcrumbItem>
   </BreadcrumbList>
 </Breadcrumb>
+<Link to ="/dashboard/books/create">
+<Button>
+  <CirclePlus size={20}/>
+<span className="ml-2"></span>
+  Add Book</Button>
+  </Link>
+
+        </div>
 <Card className="mt-5">
                 <CardHeader>
                   <CardTitle>Books</CardTitle>
@@ -99,8 +112,8 @@ import {
                     </TableHeader>
                     <TableBody>
                       {data?.data.map((book:Book)=>{
-                        return <TableRow>
-                        <TableCell className="hidden sm:table-cell">
+                        return (
+ <TableRow key={book._id}> {/* Ensure each TableRow has a unique key */}                        <TableCell className="hidden sm:table-cell">
                           <img
                             alt={book.title}
                             className="aspect-square rounded-md object-cover"
@@ -144,7 +157,7 @@ import {
                           </DropdownMenu>
                         </TableCell>
                       </TableRow>
-                      })} 
+                      )})} 
   
                      
                       
