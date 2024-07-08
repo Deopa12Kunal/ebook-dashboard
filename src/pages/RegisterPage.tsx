@@ -82,9 +82,12 @@ if(!name || !email || !password){
             <Label htmlFor="password">Password</Label>
             <Input  ref={passwordRef} id="password" type="password" />
           </div>
-          <Button onClick={handleRegisterSubmit} className="w-full " disabled={mutation.isPending}>
+          <Button onClick={handleRegisterSubmit}
+           className="w-full "
+            disabled={mutation.isPending}>
   {
-  mutation.isPending && <LoaderCircle className="animate-spin"/>
+  mutation.isPending && 
+  <LoaderCircle className="animate-spin"/>
   }
   
   <span className="ml-2">Create an account
