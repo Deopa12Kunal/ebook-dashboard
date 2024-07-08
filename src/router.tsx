@@ -7,7 +7,12 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import  BooksPage  from "./pages/BooksPage";
 import AuthLayout from "./layouts/AuthLayout";
 import CreateBook from "./pages/CreateBook";
+import { Navigate } from "react-router-dom";
                const  router=   createBrowserRouter([
+                {
+path: '/',
+element: <Navigate to ='/dashboard/home'/>,
+                },
      {
         path: "dashboard",
         element: <DashboardLayout/>,
