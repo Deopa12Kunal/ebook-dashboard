@@ -1,5 +1,5 @@
 // import React from 'react';
-import { Link, Outlet,Navigate } from "react-router-dom";
+import { Link, Outlet,Navigate, NavLink } from "react-router-dom";
 
 import {
   Bell,
@@ -63,23 +63,28 @@ setToken('');
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
+              <NavLink
                 to ="/dashboard/home"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={({isActive})=>{
+ return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                                        isActive ?'bg-slate-500' :'bg-muted'
+                                    }`;
+
+                }}
               >
                 <Home className="h-4 w-4" />
                 Home
-              </Link>
-              <Link
-                to ="/dashboard/books"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Books
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
+              </NavLink>
+              <NavLink
+                                to="/dashboard/books"
+                                className={({ isActive }) => {
+                                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                                        isActive ? 'bg-gray-500':'bg-muted'
+                                    }`;
+                                }}>
+                                <Package className="h-4 w-4" />
+                                Books{' '}
+                            </NavLink>
              
             </nav>
           </div>
